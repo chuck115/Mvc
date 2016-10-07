@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.ResponseCaching;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Net.Http.Headers;
 using Xunit;
 
 namespace Microsoft.AspNetCore.Mvc.Internal
@@ -300,7 +301,7 @@ namespace Microsoft.AspNetCore.Mvc.Internal
                     new ResponseCacheFilter(
                         new CacheProfile
                         {
-                            Duration = 0, Location= ResponseCacheLocation.Any,
+                            Duration = 0, Location = ResponseCacheLocation.Any,
                             NoStore = true, VaryByQueryKeys = new[] { "Accept" }
                         }),
                     new[] { "Accept" },
@@ -352,7 +353,7 @@ namespace Microsoft.AspNetCore.Mvc.Internal
 
             // Assert
             Assert.True(context.HttpContext.Features.Get<IResponseCacheFeature>().VaryByQueryKeys.SequenceEqual(varyOutput));
-            Assert.Equal(cacheControlOutput, context.HttpContext.Response.Headers["Cache-control"]);
+            Assert.Equal(cacheControlOutput, context.HttpContext.Response.Headers[HeaderNames.CacheControl]);
         }
 
         [Fact]
