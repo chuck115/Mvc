@@ -78,8 +78,11 @@ namespace Microsoft.AspNetCore.Mvc
         public string VaryByHeader { get; set; }
 
         /// <summary>
-        /// Gets or sets the query keys used by the response cache middleware for creating secondary vary keys.
+        /// Gets or sets the query keys to vary by.
         /// </summary>
+        /// <remarks>
+        /// <see cref="VaryByQueryKeys"/> requires the response cache middleware.
+        /// </remarks>
         public string[] VaryByQueryKeys { get; set; }
 
         /// <summary>
@@ -132,7 +135,7 @@ namespace Microsoft.AspNetCore.Mvc
                 Location = _location,
                 NoStore = _noStore,
                 VaryByHeader = VaryByHeader,
-                VaryByQueryKeys = VaryByQueryKeys
+                VaryByQueryKeys = VaryByQueryKeys,
             });
         }
     }

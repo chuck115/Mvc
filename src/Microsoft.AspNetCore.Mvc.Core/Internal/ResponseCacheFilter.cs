@@ -76,8 +76,11 @@ namespace Microsoft.AspNetCore.Mvc.Internal
         }
 
         /// <summary>
-        /// Gets or sets the query keys used by the response cache middleware for creating secondary vary keys.
+        /// Gets or sets the query keys to vary by.
         /// </summary>
+        /// <remarks>
+        /// <see cref="VaryByQueryKeys"/> requires the response cache middleware.
+        /// </remarks>
         public string[] VaryByQueryKeys
         {
             get { return _cacheVaryByQueryKeys ?? _cacheProfile.VaryByQueryKeys; }
@@ -126,7 +129,7 @@ namespace Microsoft.AspNetCore.Mvc.Internal
                 var responseCacheFeature = context.HttpContext.Features.Get<IResponseCacheFeature>();
                 if (responseCacheFeature == null)
                 {
-                    throw new InvalidOperationException($"The response cache middleware must be added when using the {nameof(VaryByQueryKeys)} feature.");
+                    throw new InvalidOperationException(Resources.VaryByQueryKeys_Requires_ResponseCachingMiddleware);
                 }
                 responseCacheFeature.VaryByQueryKeys = VaryByQueryKeys;
             }

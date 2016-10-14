@@ -178,7 +178,7 @@ namespace Microsoft.AspNetCore.Mvc
             }
             else
             {
-                Assert.True(expectedProfile.VaryByQueryKeys.SequenceEqual(responseCacheFilter.VaryByQueryKeys));
+                Assert.Equal(expectedProfile.VaryByQueryKeys, responseCacheFilter.VaryByQueryKeys);
             }
         }
 
@@ -228,7 +228,7 @@ namespace Microsoft.AspNetCore.Mvc
             Assert.True(response.Headers.TryGetValue("Vary", out values));
             data = Assert.Single(values);
             Assert.Equal("Accept", data);
-            Assert.True(varyByQueryKeys.SequenceEqual(context.HttpContext.Features.Get<IResponseCacheFeature>().VaryByQueryKeys));
+            Assert.Equal(varyByQueryKeys, context.HttpContext.Features.Get<IResponseCacheFeature>().VaryByQueryKeys);
         }
 
         public static TheoryData<ResponseCacheAttribute, string> CacheControlData
